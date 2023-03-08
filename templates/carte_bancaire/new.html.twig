@@ -1,0 +1,15 @@
+{% extends 'baseback.html.twig' %}
+
+{% block body %}
+    <h1>Create a new CarteBancaire</h1>
+
+    {{ form_start(b) }}
+        {{ form_row(b.nom) }}
+        {{ form_row(b.rib) }}
+        {{ form_row(b.numCarte) }}
+        {{ form_row(b.cvv) }}
+        {{ form_row(b.date) }}
+        {{ form_row(b.idType) }}
+        <button type="submit" class="btn btn-primary">Create</button>
+    {{ form_end(b) }}
+{% endblock %}

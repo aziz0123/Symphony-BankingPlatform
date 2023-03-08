@@ -7,8 +7,6 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Transaction>
- *
  * @method Transaction|null find($id, $lockMode = null, $lockVersion = null)
  * @method Transaction|null findOneBy(array $criteria, array $orderBy = null)
  * @method Transaction[]    findAll()
@@ -20,47 +18,33 @@ class TransactionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Transaction::class);
     }
-
-    public function save(Transaction $entity, bool $flush = false): void
+    public function countByAmountRange()
     {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        $qb = $this->createQueryBuilder('t');
+        $qb->select('count(t.id)')
+            ->where('t.amount >= 10')
+            ->andWhere('t.amount <= 100');
+    
+        return $qb->getQuery()->getResult();
     }
-
-    public function remove(Transaction $entity, bool $flush = false): void
+    public function countByAmountRange2()
     {
-        $this->getEntityManager()->remove($entity);
+        $qb = $this->createQueryBuilder('t');
+        $qb->select('count(t.id)')
+            ->where('t.amount >= 101')
+            ->andWhere('t.amount <= 1000');
+        
 
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        return $qb->getQuery()->getResult();
     }
+    public function countByAmountRange3()
+    {
+        $qb = $this->createQueryBuilder('t');
+        $qb->select('count(t.id)')
+            ->where('t.amount >= 1001');
 
-//    /**
-//     * @return Transaction[] Returns an array of Transaction objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('t.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+        return $qb->getQuery()->getResult();
+    }
+   
 
-//    public function findOneBySomeField($value): ?Transaction
-//    {
-//        return $this->createQueryBuilder('t')
-//            ->andWhere('t.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

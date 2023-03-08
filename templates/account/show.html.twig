@@ -1,0 +1,104 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}{{ account.name }}{% endblock %}
+
+{% block texte %}
+<div class="row" style="display:  center;margin-top: 10px;"> <a href="{{ path ('addCarte')}}">
+			<i class="ri-arrow-left-circle-fill" style="font-size: 60px;"></i>
+		</a>
+
+
+			<input type="text" id="searchInput" placeholder="Search...">
+
+    <table class="table table-striped" id="table"  >
+        <thead>
+        <tr>
+            <th scope="col">nom</th>
+            <th scope="col">Balance</th>
+            <th scope="col">etat</th>
+            <th scope="col">numero du compte</th>
+            <th scope="col">rib</th>
+            <th scope="col">Option Carte</th>
+            <th scope="col">Modifier</th>
+            <th scope="col">Supprimer</th>
+            <th scope="col">Action</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for t in account %}
+            <tr>
+                <td> {{ t.name }} </td>
+
+                <td>{{ t.balance }} </td>
+                <td>{{ t.etat }} </td>
+                <td>{{ t.numeroCompte }} </td>
+                <td>12345-{{ t.rib }}-56</td>
+                <td><a class="btn btn-success" href="{{ path('demandeCarte',{'id':t.id}) }}">carte </a></td>
+                <td><a class="btn btn-success" href="{{ path('modifierAccount',{'id':t.id}) }}">modifier </a></td>
+                <td><a class="btn btn-danger" href="{{ path('deleteAccount',{'id':t.id}) }}">supprimer </a></td>
+                {% if t.etat == "non active" %}
+                    <td><a class="btn btn-success" href="{{ path('activation',{'id':t.id}) }}">activer</a></td>
+                {% else %}
+                    <td> Ce Compte est active
+                    </td>
+                {% endif %}
+
+
+            </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+    	<button id="exportBtn">Export to CSV</button>
+ <script>
+    function downloadCSV(csv, filename) {
+        const csvFile = new Blob([csv], { type: 'text/csv' });
+        const downloadLink = document.createElement('a');
+        downloadLink.download = filename;
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        downloadLink.style.display = 'none';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+    }
+
+    function filterTable() {
+        const filter = document.getElementById('searchInput').value.toUpperCase();
+        const rows = document.querySelectorAll('table tr');
+        for (let i = 1; i < rows.length; i++) {
+            const cols = rows[i].querySelectorAll('td');
+            let visible = false;
+            for (let j = 0; j < cols.length; j++) {
+                const cell = cols[j];
+                if (cell.innerText.toUpperCase().indexOf(filter) > -1) {
+                    visible = true;
+                    break;
+                }
+            }
+            rows[i].style.display = visible ? '' : 'none';
+        }
+    }
+
+    function exportTableToCSV(filename) {
+        const csv = [];
+        const rows = document.querySelectorAll('table tr');
+        for (let i = 1; i < rows.length; i++) {
+            if (rows[i].style.display !== 'none') {
+                const row = [], cols = rows[i].querySelectorAll('td, th');
+                for (let j = 0; j < (cols.length)-1; j++)
+                    row.push(cols[j].innerText);
+                csv.push(row.join(','));
+            }
+        }
+        downloadCSV(csv.join('\n'), filename);
+    }
+
+    document.getElementById('searchInput').addEventListener('keyup', filterTable);
+    document.getElementById('exportBtn').addEventListener('click', function() {
+        exportTableToCSV('Bonachat.csv');
+    });
+  </script>
+    </div>
+
+{% endblock %}

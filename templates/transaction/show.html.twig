@@ -1,34 +1,65 @@
-{% extends 'base-front.html.twig' %}
+{% extends 'basefront.html.twig' %}
 
-{% block title %}Transaction{% endblock %}
+{% block title %}
+	{{ account.name }}
+{% endblock %}
 
 {% block body %}
-    <h1>Transaction</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ transaction.id }}</td>
-            </tr>
-            <tr>
-                <th>Rib_des</th>
-                <td>{{ transaction.ribDes }}</td>
-            </tr>
-            <tr>
-                <th>Rib_env</th>
-                <td>{{ transaction.ribEnv }}</td>
-            </tr>
-            <tr>
-                <th>Montant</th>
-                <td>{{ transaction.montant }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_transaction_index') }}">back to list</a>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">Le compte source</th>
 
-    <a href="{{ path('app_transaction_edit', {'id': transaction.id}) }}">edit</a>
+				<th scope="col">le compte destinataire</th>
+				<th scope="col">le montant</th>
+				<th scope="col">date
+				</th>
 
-    {{ include('transaction/_delete_form.html.twig') }}
+
+			</tr>
+		</thead>
+		<tbody>
+			{% for trans in trans %}
+				<tr>
+					<td>
+						{{ trans.sourceAccount}}
+					</td>
+					<td>{{  trans.destinationAccount}}
+					</td>
+					<td>{{  trans.amount}}
+					</td>
+					<td>{{  trans.createdAt |date('Y-m-d H:i:s') }}
+					</td>
+
+				</tr>
+
+			{% endfor %}
+		</tbody>
+
+	</table>
+	
+    <nav aria-label="Example Pagination " >
+          <ul class="pagination pg-blue">
+            <li class="page-item">
+              <a class="page-link" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <li class="page-item"><a href="/displayTransaction?page=1"  class="page-link active-pagination1">1</a></li>
+            <li class="page-item"><a href="/displayTransaction?page=2" class="page-link">2</a></li>
+            <li class="page-item"><a href="/displayTransaction?page=3" class="page-link">3</a></li>
+            <li class="page-item"><a   href="/displayTransaction?page=4" class="page-link">4</a></li>
+            <li class="page-item">
+              <a class="page-link" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+</nav>
+<a href="/pdfTransaction"> pdf</a>
+
 {% endblock %}

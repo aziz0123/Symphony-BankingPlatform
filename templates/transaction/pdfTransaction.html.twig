@@ -1,0 +1,42 @@
+{% extends 'basefront.html.twig' %}
+
+
+
+{% block body %}
+
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">Le compte source</th>
+
+				<th scope="col">le compte destinataire</th>
+				<th scope="col">le montant</th>
+				<th scope="col">date
+				</th>
+
+
+			</tr>
+		</thead>
+		<tbody>
+			{% for trans in trans %}
+				<tr>
+					<td>
+						{{ trans.sourceAccount}}
+					</td>
+					<td>{{  trans.destinationAccount}}
+					</td>
+					<td>{{  trans.amount}}
+					</td>
+					<td>{{  trans.createdAt |date('Y-m-d H:i:s') }}
+					</td>
+
+				</tr>
+
+			{% endfor %}
+		</tbody>
+
+	</table>
+
+
+{% endblock %}

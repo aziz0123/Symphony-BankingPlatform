@@ -1,80 +1,107 @@
 <?php
 
 namespace App\Entity;
-
-use App\Repository\TransactionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: TransactionRepository::class)]
+
+/**
+ * @ORM\Entity
+ */
+
+
 class Transaction
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $rib_des = null;
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Compte", inversedBy="transactions")
+     * @ORM\JoinColumn(nullable=false,onDelete="CASCADE")
+     */
+    private $sourceAccount;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $rib_env = null;
+    /**
+     * @ORM\Column(type="float")
+     * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message="ce champs ne doit pas etre vide")
+     */
+    private $destinationAccount;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $montant = null;
+    /**
+     * @ORM\Column(type="float")
+     * @Assert\NotBlank(message="ce champs ne doit pas etre vide")
+     */
+    private $amount;
 
-     #[ORM\ManyToOne(inversedBy: 'transactions')]
-     private ?CompteBancaire $CompteB = null;
+    /**
+     *@var \DateTime
+
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+
+
+    // getters and setters
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getRibDes(): ?int
+    public function getSourceAccount(): ?Compte
     {
-        return $this->rib_des;
+        return $this->sourceAccount;
     }
 
-    public function setRibDes(?int $rib_des): self
+    public function setSourceAccount(?Compte $sourceAccount): self
     {
-        $this->rib_des = $rib_des;
+        $this->sourceAccount = $sourceAccount;
 
         return $this;
     }
 
-    public function getRibEnv(): ?int
+    public function getDestinationAccount(): ?int
     {
-        return $this->rib_env;
+        return $this->destinationAccount;
     }
 
-    public function setRibEnv(?int $rib_env): self
+    public function setDestinationAccount(?int $destinationAccount): self
     {
-        $this->rib_env = $rib_env;
+        $this->destinationAccount = $destinationAccount;
 
         return $this;
     }
 
-    public function getMontant(): ?int
+    public function getAmount(): ?float
     {
-        return $this->montant;
+        return $this->amount;
     }
 
-    public function setMontant(?int $montant): self
+    public function setAmount(float $amount): self
     {
-        $this->montant = $montant;
+        $this->amount = $amount;
 
         return $this;
     }
 
-     public function getCompteB(): ?CompteBancaire
-     {
-         return $this->CompteB;
-     }
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
 
-     public function setCompteB(?CompteBancaire $CompteB): self
-     {
-         $this->CompteB = $CompteB;
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
-         return $this;
-     }
+        return $this;
+    }
+    
+
+
 }

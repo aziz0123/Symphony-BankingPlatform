@@ -1,0 +1,51 @@
+ {% extends 'baseback.html.twig' %}
+
+ {% block texte %}
+       
+<div class="row" style="display:  center;margin-top: 10px;"> 
+<table class="table">
+    <a href="{{ path ('addType')}}"><i class="ri-arrow-left-circle-fill" style="font-size: 60px;"></i></a>
+         <h5 class="card-title">Listes Des Types Des Cartes Bancaires</h5>
+
+            <table class="table table-striped">
+                <thead>
+                   <tr>
+                     <th scope="col">id</th>
+                     <th scope="col">nom</th>
+   
+                    <th scope="col">description</th>
+                     <th scope="col">mofication</th>
+                     <th scope="col">suppression</th>
+                     </tr>
+                </thead>
+                <tbody>
+                  {% for type in b %}
+    <tr>
+     
+    <td> {{ type.id }}</td> 
+     <td> {{ type.nom}} </td> 
+   
+        <td>{{  type.descrpition}} </td> 
+   
+             <td> 
+           <a class= "btn btn-success" href="{{path('modifierType',{'id':type.id}) }}">modifier </a>
+
+           <td>
+               <a class= "btn btn-danger" href="{{path('deleteType',{'id':type.id}) }}">supprimer </a>
+          
+             
+              </td> 
+    </tr>
+  
+      {% endfor %}
+                </tbody>
+              </table>
+        
+
+
+
+
+
+</table>
+</div>
+ {% endblock %}
