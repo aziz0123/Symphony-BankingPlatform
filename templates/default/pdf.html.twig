@@ -1,0 +1,23 @@
+
+{% block title %}MON PDF{% endblock %}
+{% block body %}
+<h4>{{ title }}</h4>
+<div class="row mb-5">
+    <div class="col-md-6 mb-4 mb-lg-0 col-lg-4" data-aos="fade-up" data-aos-delay="">
+        <div class="pricing">
+            {% for pack in packs  %}
+                <h3 class="text-center text-black">{{ pack.nom }}</h3>
+                <div><img src="{{ asset('assets/uploads' ~ pack.image) }}" alt="Image" width="300" height="300"></div>
+                <div class="price text-center mb-4 ">
+                    <span><span>{{ pack.prix }}</span> / year</span>
+                </div>
+                <ul class="list-unstyled ul-check success mb-5">
+                    {{ pack.description }}
+                </ul>
+            {% endfor %}
+
+        </div>
+</div>
+</div>
+
+{%endblock %}

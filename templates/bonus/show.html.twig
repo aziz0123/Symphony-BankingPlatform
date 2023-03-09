@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bonus{% endblock %}
+
+{% block body %}
+    <h1>Bonus</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ bonu.id }}</td>
+            </tr>
+            <tr>
+                <th>Id Pack</th>
+                <td>{{ bonu.bonus_id }}</td>
+            </tr>
+            <tr>
+                <th>NomBonus1</th>
+                <td>{{ bonu.nomBonus1 }}</td>
+            </tr>
+            <tr>
+                <th>NomBonus2</th>
+                <td>{{ bonu.nomBonus2 }}</td>
+            </tr>
+            <tr>
+                <th>NomBonus3</th>
+                <td>{{ bonu.nomBonus3 }}</td>
+            </tr>
+            <tr>
+                <th>NomBonus4</th>
+                <td>{{ bonu.nomBonus4 }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_bonus_index') }}">back to list</a>
+
+    <a href="{{ path('app_bonus_edit', {'id': bonu.id}) }}">edit</a>
+
+    {{ include('bonus/_delete_form.html.twig') }}
+{% endblock %}

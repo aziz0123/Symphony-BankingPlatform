@@ -1,0 +1,8 @@
+pagination {
+  transition: background-color .3s;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid #ddd;
+  font-size: 22px;
+}

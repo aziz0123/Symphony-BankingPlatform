@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Form;
+
+use App\Entity\Bonus;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class BonusType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('nomBonus1')
+            ->add('nomBonus2')
+            ->add('nomBonus3')
+            ->add('nomBonus4')
+            ->add('bonus')
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => Bonus::class,
+        ]);
+    }
+
+
+
+}

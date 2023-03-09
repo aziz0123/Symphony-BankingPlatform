@@ -1,0 +1,50 @@
+{% extends 'basefront.html.twig' %}
+{% block title %}Pack index{% endblock %}
+
+{% block body %}
+
+
+    <section class="site-section bg-light" id="pricing-section">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up">
+                    <h2 class="section-title mb-3">OUR PACKS</h2>
+                </div>
+            </div>
+
+
+            <div class="row mb-5">
+                <div class="col-md-6 mb-4 mb-lg-0 col-lg-4" data-aos="fade-up" data-aos-delay="">
+                    <div class="pricing">
+                        {% for pack in packs  %}
+                        <h3 class="text-center text-black">{{ pack.nom }}</h3>
+                        <div><img src="{{ asset('assets/uploads' ~ pack.image) }}" alt="Image" width="300" height="300"></div>
+                        <div class="price text-center mb-4 ">
+                            <span><span>{{ pack.prix }}</span> / year</span>
+                        </div>
+                        <ul class="list-unstyled ul-check success mb-5">
+                            {{ pack.description }}
+                        </ul>
+                        <p class="text-center">
+                            <a href="{{path('app_bonus_front')}}" class="btn btn-secondary">Buy Now</a>
+                        </p>
+
+                        {% endfor %}
+
+                    </div>
+
+                    <div class="pagination" >
+                        {{ knp_pagination_render(packs) }}
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+
+{% endblock %}
